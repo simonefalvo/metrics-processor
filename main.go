@@ -21,6 +21,7 @@ import (
 	"time"
 
 	"github.com/nats-io/nats.go"
+	"github.com/smvfal/metrics-processor/pkg/store"
 )
 
 // NOTE: Can test with demo servers.
@@ -28,7 +29,7 @@ import (
 // nats-sub -s demo.nats.io:4443 <subject> (TLS version)
 
 func usage() {
-	log.Printf("Usage: nats-sub [-s server] [-creds file] [-t] <subject>\n")
+	log.Printf("Usage: metrics-processor [-s server] [-creds file] [-t] <subject>\n")
 	flag.PrintDefaults()
 }
 
@@ -77,8 +78,10 @@ func main() {
 
 	subj, i := args[0], 0
 
+	// Subscribe to the subject and declare msg handler
 	nc.Subscribe(subj, func(msg *nats.Msg) {
 		i += 1
+		store.WriteMessage(msg.Data)
 		printMsg(msg, i)
 	})
 	nc.Flush()
