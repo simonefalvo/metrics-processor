@@ -37,15 +37,19 @@ func WriteMessage(data []byte) {
 		file := openFile("./data/"+function.Name+".csv", header)
 
 		functionCpu := 0.0
-		for _, podCpu := range function.Cpu {
-			functionCpu += float64(podCpu)
+		if function.Cpu != nil {
+			for _, podCpu := range function.Cpu {
+				functionCpu += podCpu
+			}
+			functionCpu /= float64(len(function.Cpu))
 		}
-		functionCpu /= float64(len(function.Cpu))
 		functionMem := 0.0
-		for _, podMem := range function.Mem {
-			functionMem += float64(podMem)
+		if function.Mem != nil {
+			for _, podMem := range function.Mem {
+				functionMem += podMem
+			}
+			functionMem /= float64(len(function.Mem))
 		}
-		functionMem /= float64(len(function.Mem))
 
 		row := [][]string{{
 			strconv.FormatInt(message.Timestamp, 10),
