@@ -73,13 +73,14 @@ func WriteMessage(data []byte) {
 
 	for _, node := range nodes {
 
-		header := [][]string{{"timestamp", "cpu", "mem"}}
+		header := [][]string{{"timestamp", "cpu", "mem", "functions"}}
 		file := openFile("./data/"+node.Name+".csv", header)
 
 		row := [][]string{{
 			strconv.FormatInt(message.Timestamp, 10),
 			strconv.FormatFloat(node.Cpu, 'f', 4, 64),
 			strconv.FormatFloat(node.Mem, 'f', 4, 64),
+			strconv.Itoa(len(node.Functions)),
 		}}
 
 		// write row
