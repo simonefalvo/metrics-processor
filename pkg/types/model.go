@@ -8,6 +8,7 @@ type Function struct {
 	ProcessingTime float64            `json:"processing_time"`
 	Throughput     float64            `json:"throughput"`
 	ColdStart      float64            `json:"cold_start"`
+	Nodes          []string           `json:"nodes"`
 	Cpu            map[string]float64 `json:"cpu,omitempty"`
 	Mem            map[string]float64 `json:"mem,omitempty"`
 }
@@ -24,3 +25,5 @@ type Message struct {
 	Nodes     []Node     `json:"nodes"`
 	Timestamp int64      `json:"timestamp"`
 }
+
+type RegionDelays map[string]int64
